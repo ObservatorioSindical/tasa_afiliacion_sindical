@@ -146,9 +146,11 @@ fuentes <- c("DERTO","Barret","Morris y Olander","ClioLab","DT")
 lineas <- c("solid","longdash","solid","longdash","solid")
 
 F1 = af_1932_2010 %>% gather(Fuente,value,starts_with("ts2.0_")) %>%
-    ggplot(aes(x = agno, y = value, color = Fuente, linetype = Fuente)) +          geom_line() +
+    ggplot(aes(x = agno, y = value, color = Fuente, linetype = Fuente)) +          
+    geom_line() +
     scale_linetype_manual(values= lineas, labels = fuentes)+
     scale_x_continuous(name="Año", limits=c(1932,2010))+ 
+    scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) + 
     labs(y = "Total de Afiliados Sindicales")+
     scale_color_manual(values = colores_res,
                       labels = fuentes)
@@ -254,6 +256,7 @@ F3 = af_1932_2010 %>% gather(Fuente,value,starts_with("nsin2.0_")) %>%
     ggplot(aes(x = agno, y = value, color = Fuente, linetype = Fuente)) +          geom_line() +
     scale_linetype_manual(values= lineas, labels = fuentes)+
     scale_x_continuous(name="Año", limits=c(1932,2010))+ 
+    scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) + 
     labs(y = "Total de Sindicatos")+
     scale_color_manual(values = colores_res,
                       labels = fuentes)
@@ -276,7 +279,7 @@ La Figura 4 expone la propuesta de empalme del total de sindicatos (eje derecho)
 - A partir de 1980, junto con el nuevo Código del Trabajo y la reestructuración de la economía, el tamaño promedio de los sindicatos cae drásticamente, oscilando desde entonces entre los 100 y 70 afiliados por organización, al mismo tiempo que la cantidad total de sindicatos alcanza su nivel histórico más alto, superando la barrera de los 8.000, y llegando a cerca de 10.000 en 2010. En este sentido, el nivel de fragmentación sindical logra contrarrestar el aumento absoluto en la afiliación, manteniendo el tamaño promedio constante.
 
 
-```{r figura4, echo=FALSE, fig.height=4, fig.width=6,fig.cap="Tamaño Promedio de los Sindicatos y Total de Sindicatos (1932-2010"}
+```{r figura4, echo=FALSE, fig.height=4, fig.width=6,fig.cap="Tamaño Promedio de los Sindicatos y Total de Sindicatos (1932-2010)"}
 ase = ase %>% mutate(tp_sin =(afil/sin))
 sindic = ts(ase$sin,1932, 2010, 1)
 afil = ts(ase$afil,1932, 2010, 1)
